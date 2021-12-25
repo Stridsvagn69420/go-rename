@@ -1,0 +1,21 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Go: build executable",
+            "command": "go",
+            "type": "shell",
+            "args": [
+                "build",
+                "-o",
+                "${workspaceFolder}/build/${go.binaryName}",
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "silent"
+            }
+        }
+    ]
+}
