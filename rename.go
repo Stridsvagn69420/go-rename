@@ -15,10 +15,14 @@ func main() {
 	}
 	// set cli flags
 	flag.StringVar(&path, "D", path, "Directory of files to rename")
-	flag.String("E", "*", "File extension to filter")
-	flag.String("S", "", "Substring to replace")
-	flag.String("R", "", "Replacement string")
+	extension := flag.String("E", "*", "File extension to filter")
+	substring := flag.String("S", "", "Substring to replace")
+	replacement := flag.String("R", "", "Replacement string")
 	flag.Parse()
 
-	fmt.Print(path)
+	fmt.Println(path)
+	fmt.Println(*extension)
+	fmt.Println(*substring)
+	fmt.Println(*replacement)
+
 }

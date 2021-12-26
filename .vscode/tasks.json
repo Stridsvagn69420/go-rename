@@ -16,6 +16,16 @@
             "presentation": {
                 "reveal": "silent"
             }
+        },
+        {
+            "label": "Go: test executable",
+            "command": "go",
+            "type": "shell",
+            "args": [
+                "run",
+                "${workspaceFolder}/${go.binaryName}",
+            ],
+            "group": "test"
         }
     ]
 }
