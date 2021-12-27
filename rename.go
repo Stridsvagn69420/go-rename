@@ -5,16 +5,18 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path"
+	"strings"
 )
 
 func main() {
 	// presets
-	path, err := os.Getwd()
+	dir, err := os.Getwd()
 	if err != nil {
-		path = "./"
+		dir = "./"
 	}
 	// set cli flags
-	flag.StringVar(&path, "D", path, "Directory of files to rename")
+	flag.StringVar(&dir, "D", dir, "Directory of files to rename")
 	extension := flag.String("E", "*", "File extension to filter")
 	substring := flag.String("S", "", "Substring to replace")
 	replacement := flag.String("R", "\u200b", "Replacement string\n")
@@ -27,7 +29,7 @@ func main() {
 		errorFlags = true
 	}
 	if *substring == "" {
-		os.Stderr.WriteString("\033[1;31mSubstring not set but required!\033[0m\n")
+		os.Stderr.WriteString("\033[31mSubstring not set but required!\033[0m\n")
 		errorFlags = true
 	}
 	if errorFlags {
@@ -36,15 +38,34 @@ func main() {
 	}
 
 	// read files
-	files, err := ioutil.ReadDir(path)
+	files, err := ioutil.ReadDir(dir)
 	if err != nil {
 		os.Stderr.WriteString(err.Error() + "\n")
 	}
 	files = filterFiles(files, *extension)
 
 	// rename files
+	fmt.Println("Renaming files in \033[1m" + dir + "\033[0m...")
+	ranOnce := false
 	for _, file := range files {
-		fmt.Print(file.Name())
+		newName := strings.ReplaceAll(file.Name(), *substring, *replacement)
+		if newName != file.Name() {
+			if !ranOnce {
+				ranOnce = true
+			}
+			err := os.Rename(
+				path.Join(dir, file.Name()),
+				path.Join(dir, newName),
+			)
+			if err != nil {
+				os.Stderr.WriteString(err.Error() + "\n")
+				os.Exit(2)
+			}
+			fmt.Println("\033[31m" + file.Name() + "\033[0m => \033[32m" + newName + "\033[0m")
+		}
+	}
+	if !ranOnce {
+		fmt.Println("No files replaced.")
 	}
 
 	// exit normally
