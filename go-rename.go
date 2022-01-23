@@ -33,7 +33,7 @@ func main() {
 		errorFlags = true
 	}
 	if errorFlags {
-		fmt.Print("To get help, run: \033[1;32mrename -h\033[0m\n")
+		fmt.Print("To get help, run: \033[32mgo-rename -h\033[0m\n")
 		os.Exit(1)
 	}
 
