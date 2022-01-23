@@ -1,11 +1,11 @@
 install:
-	go install replace.go
+	go install go-rename.go
 
 test:
-	go run replace.go
+	go run go-rename.go
 
 windows:
-	go build -o build/replace.exe replace.go
+	go build -o build/go-rename.exe go-rename.go
 
 linux:
-	go build -o build/replace replace.go
+	go build -o build/go-rename go-rename.go
