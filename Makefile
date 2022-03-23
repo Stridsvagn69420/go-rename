@@ -1,11 +1,5 @@
+compile:
+        go build -ldflags="-s -w" go-rename.go
+
 install:
-	go install go-rename.go
-
-test:
-	go run go-rename.go
-
-windows:
-	go build -o build/go-rename.exe go-rename.go
-
-linux:
-	go build -o build/go-rename go-rename.go
+	go build -ldflags="-s -w" go-rename.go
